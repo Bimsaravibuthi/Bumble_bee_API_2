@@ -6,11 +6,6 @@ namespace Bumble_bee_API_2.DAL
 {
     public class tbl_User
     {
-        public tbl_User()
-        {
-            this.PRODUCT = new List<tbl_Product>();
-        }
-
         [Key]
         public int USR_ID { get; set; }
         [Column(TypeName = "nvarchar(2)")]
@@ -33,7 +28,7 @@ namespace Bumble_bee_API_2.DAL
         public byte[]? USR_PWD { get; set; }
         [Required]
         public bool CUS_STATUS { get; set; }
-        public List<tbl_Address>? ADDRESS { get; set; }
-        public List<tbl_Product>? PRODUCT { get; set; }
+        public ICollection<tbl_Address>? ADDRESS { get; set; }
+        public ICollection<tbl_UserProduct>? tbl_UserProducts { get; set; }
     }
 }

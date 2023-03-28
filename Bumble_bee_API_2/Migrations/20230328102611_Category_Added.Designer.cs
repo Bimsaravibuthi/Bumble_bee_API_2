@@ -4,6 +4,7 @@ using Bumble_bee_API_2.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bumble_bee_API_2.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230328102611_Category_Added")]
+    partial class Category_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace Bumble_bee_API_2.Migrations
 
                     b.HasIndex("USERUSR_ID");
 
-                    b.ToTable("tbl_Addresses", (string)null);
+                    b.ToTable("tbl_Addresses");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Brand", b =>
@@ -73,7 +75,7 @@ namespace Bumble_bee_API_2.Migrations
 
                     b.HasKey("BR_ID");
 
-                    b.ToTable("tbl_Brands", (string)null);
+                    b.ToTable("tbl_Brands");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Category", b =>
@@ -90,7 +92,7 @@ namespace Bumble_bee_API_2.Migrations
 
                     b.HasKey("CAT_ID");
 
-                    b.ToTable("tbl_Category", (string)null);
+                    b.ToTable("tbl_Category");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_City", b =>
@@ -112,7 +114,7 @@ namespace Bumble_bee_API_2.Migrations
 
                     b.HasIndex("DISTRICTDT_ID");
 
-                    b.ToTable("tbl_Cities", (string)null);
+                    b.ToTable("tbl_Cities");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_District", b =>
@@ -129,7 +131,7 @@ namespace Bumble_bee_API_2.Migrations
 
                     b.HasKey("DT_ID");
 
-                    b.ToTable("tbl_Districts", (string)null);
+                    b.ToTable("tbl_Districts");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Product", b =>
@@ -146,10 +148,6 @@ namespace Bumble_bee_API_2.Migrations
                     b.Property<int?>("CATEGORYCAT_ID")
                         .HasColumnType("int");
 
-                    b.Property<string>("PR_COST")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(7)");
-
                     b.Property<string>("PR_DESCRIPTION")
                         .IsRequired()
                         .HasColumnType("nvarchar(MAX)");
@@ -162,16 +160,13 @@ namespace Bumble_bee_API_2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(7)");
 
-                    b.Property<int>("PR_QTY")
-                        .HasColumnType("int");
-
                     b.HasKey("PR_ID");
 
                     b.HasIndex("BRANDBR_ID");
 
                     b.HasIndex("CATEGORYCAT_ID");
 
-                    b.ToTable("tbl_Product", (string)null);
+                    b.ToTable("tbl_Product");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_User", b =>
@@ -211,7 +206,7 @@ namespace Bumble_bee_API_2.Migrations
 
                     b.HasKey("USR_ID");
 
-                    b.ToTable("tbl_Users", (string)null);
+                    b.ToTable("tbl_Users");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_UserProduct", b =>
@@ -232,7 +227,7 @@ namespace Bumble_bee_API_2.Migrations
 
                     b.HasIndex("PRODUCT_ID");
 
-                    b.ToTable("tbl_UserProduct", (string)null);
+                    b.ToTable("tbl_UserProduct");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Address", b =>

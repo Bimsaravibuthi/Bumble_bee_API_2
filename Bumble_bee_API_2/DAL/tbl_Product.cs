@@ -5,11 +5,6 @@ namespace Bumble_bee_API_2.DAL
 {
     public class tbl_Product
     {
-        public tbl_Product() 
-        {
-            this.USERS = new List<tbl_User>();
-        }
-
         [Key]
         public int PR_ID { get; set; }
         [Column(TypeName = "nvarchar(25)")]
@@ -21,6 +16,12 @@ namespace Bumble_bee_API_2.DAL
         [Column(TypeName = "nvarchar(7)")]
         [Required]
         public string? PR_PRICE { get; set; }
-        public List<tbl_User>? USERS { get; set; }
+        [Column(TypeName = "nvarchar(7)")]
+        [Required]
+        public string? PR_COST { get; set; }
+        public int PR_QTY { get; set; }
+        public ICollection<tbl_UserProduct>? tbl_UserProducts { get; set; }
+        public tbl_Brand? BRAND { get; set; }
+        public tbl_Category? CATEGORY { get; set; }
     }
 }

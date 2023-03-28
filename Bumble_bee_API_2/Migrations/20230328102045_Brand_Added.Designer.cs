@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bumble_bee_API_2.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230327060935_Initial_Database")]
-    partial class Initial_Database
+    [Migration("20230328102045_Brand_Added")]
+    partial class Brand_Added
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,9 +49,6 @@ namespace Bumble_bee_API_2.Migrations
                     b.Property<int>("CITYCT_ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("DISTRICTDT_ID")
-                        .HasColumnType("int");
-
                     b.Property<int>("USERUSR_ID")
                         .HasColumnType("int");
 
@@ -59,11 +56,26 @@ namespace Bumble_bee_API_2.Migrations
 
                     b.HasIndex("CITYCT_ID");
 
-                    b.HasIndex("DISTRICTDT_ID");
-
                     b.HasIndex("USERUSR_ID");
 
                     b.ToTable("tbl_Addresses");
+                });
+
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Brand", b =>
+                {
+                    b.Property<int>("BR_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BR_ID"), 1L, 1);
+
+                    b.Property<string>("BR_NAME")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("BR_ID");
+
+                    b.ToTable("tbl_Brands");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_City", b =>
@@ -78,7 +90,12 @@ namespace Bumble_bee_API_2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(25)");
 
+                    b.Property<int?>("DISTRICTDT_ID")
+                        .HasColumnType("int");
+
                     b.HasKey("CT_ID");
+
+                    b.HasIndex("DISTRICTDT_ID");
 
                     b.ToTable("tbl_Cities");
                 });
@@ -98,6 +115,36 @@ namespace Bumble_bee_API_2.Migrations
                     b.HasKey("DT_ID");
 
                     b.ToTable("tbl_Districts");
+                });
+
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Product", b =>
+                {
+                    b.Property<int>("PR_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PR_ID"), 1L, 1);
+
+                    b.Property<int?>("BRANDBR_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PR_DESCRIPTION")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<string>("PR_NAME")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("PR_PRICE")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(7)");
+
+                    b.HasKey("PR_ID");
+
+                    b.HasIndex("BRANDBR_ID");
+
+                    b.ToTable("tbl_Product");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_User", b =>
@@ -140,17 +187,32 @@ namespace Bumble_bee_API_2.Migrations
                     b.ToTable("tbl_Users");
                 });
 
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_UserProduct", b =>
+                {
+                    b.Property<int>("USER_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PRODUCT_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ADDED_USER")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LAST_UP_USER")
+                        .HasColumnType("int");
+
+                    b.HasKey("USER_ID", "PRODUCT_ID");
+
+                    b.HasIndex("PRODUCT_ID");
+
+                    b.ToTable("tbl_UserProduct");
+                });
+
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Address", b =>
                 {
                     b.HasOne("Bumble_bee_API_2.DAL.tbl_City", "CITY")
                         .WithMany("ADDRESS")
                         .HasForeignKey("CITYCT_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bumble_bee_API_2.DAL.tbl_District", "DISTRICT")
-                        .WithMany()
-                        .HasForeignKey("DISTRICTDT_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -162,9 +224,49 @@ namespace Bumble_bee_API_2.Migrations
 
                     b.Navigation("CITY");
 
-                    b.Navigation("DISTRICT");
-
                     b.Navigation("USER");
+                });
+
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_City", b =>
+                {
+                    b.HasOne("Bumble_bee_API_2.DAL.tbl_District", "DISTRICT")
+                        .WithMany("CITY")
+                        .HasForeignKey("DISTRICTDT_ID");
+
+                    b.Navigation("DISTRICT");
+                });
+
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Product", b =>
+                {
+                    b.HasOne("Bumble_bee_API_2.DAL.tbl_Brand", "BRAND")
+                        .WithMany("PRODUCT")
+                        .HasForeignKey("BRANDBR_ID");
+
+                    b.Navigation("BRAND");
+                });
+
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_UserProduct", b =>
+                {
+                    b.HasOne("Bumble_bee_API_2.DAL.tbl_Product", "tbl_Product")
+                        .WithMany("tbl_UserProducts")
+                        .HasForeignKey("PRODUCT_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bumble_bee_API_2.DAL.tbl_User", "tbl_User")
+                        .WithMany("tbl_UserProducts")
+                        .HasForeignKey("USER_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("tbl_Product");
+
+                    b.Navigation("tbl_User");
+                });
+
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Brand", b =>
+                {
+                    b.Navigation("PRODUCT");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_City", b =>
@@ -172,9 +274,21 @@ namespace Bumble_bee_API_2.Migrations
                     b.Navigation("ADDRESS");
                 });
 
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_District", b =>
+                {
+                    b.Navigation("CITY");
+                });
+
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Product", b =>
+                {
+                    b.Navigation("tbl_UserProducts");
+                });
+
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_User", b =>
                 {
                     b.Navigation("ADDRESS");
+
+                    b.Navigation("tbl_UserProducts");
                 });
 #pragma warning restore 612, 618
         }

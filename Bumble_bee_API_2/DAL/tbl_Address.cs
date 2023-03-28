@@ -21,8 +21,6 @@ namespace Bumble_bee_API_2.DAL
         [Required]
         public tbl_City? CITY { get; set; }
         [Required]
-        public tbl_District? DISTRICT { get; set; }
-        [Required]
         public tbl_User? USER { get; set; }
     }
 }

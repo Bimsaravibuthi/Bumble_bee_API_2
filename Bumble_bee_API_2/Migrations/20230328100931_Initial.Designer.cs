@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bumble_bee_API_2.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230327103146_test")]
-    partial class test
+    [Migration("20230328100931_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,17 +49,12 @@ namespace Bumble_bee_API_2.Migrations
                     b.Property<int>("CITYCT_ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("DISTRICTDT_ID")
-                        .HasColumnType("int");
-
                     b.Property<int>("USERUSR_ID")
                         .HasColumnType("int");
 
                     b.HasKey("ADD_ID");
 
                     b.HasIndex("CITYCT_ID");
-
-                    b.HasIndex("DISTRICTDT_ID");
 
                     b.HasIndex("USERUSR_ID");
 
@@ -170,19 +165,25 @@ namespace Bumble_bee_API_2.Migrations
                     b.ToTable("tbl_Users");
                 });
 
-            modelBuilder.Entity("tbl_Producttbl_User", b =>
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_UserProduct", b =>
                 {
-                    b.Property<int>("PRODUCTPR_ID")
+                    b.Property<int>("USER_ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("USERSUSR_ID")
+                    b.Property<int>("PRODUCT_ID")
                         .HasColumnType("int");
 
-                    b.HasKey("PRODUCTPR_ID", "USERSUSR_ID");
+                    b.Property<int>("ADDED_USER")
+                        .HasColumnType("int");
 
-                    b.HasIndex("USERSUSR_ID");
+                    b.Property<int>("LAST_UP_USER")
+                        .HasColumnType("int");
 
-                    b.ToTable("tbl_Producttbl_User");
+                    b.HasKey("USER_ID", "PRODUCT_ID");
+
+                    b.HasIndex("PRODUCT_ID");
+
+                    b.ToTable("tbl_UserProduct");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Address", b =>
@@ -193,12 +194,6 @@ namespace Bumble_bee_API_2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bumble_bee_API_2.DAL.tbl_District", "DISTRICT")
-                        .WithMany()
-                        .HasForeignKey("DISTRICTDT_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Bumble_bee_API_2.DAL.tbl_User", "USER")
                         .WithMany("ADDRESS")
                         .HasForeignKey("USERUSR_ID")
@@ -206,8 +201,6 @@ namespace Bumble_bee_API_2.Migrations
                         .IsRequired();
 
                     b.Navigation("CITY");
-
-                    b.Navigation("DISTRICT");
 
                     b.Navigation("USER");
                 });
@@ -221,19 +214,23 @@ namespace Bumble_bee_API_2.Migrations
                     b.Navigation("DISTRICT");
                 });
 
-            modelBuilder.Entity("tbl_Producttbl_User", b =>
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_UserProduct", b =>
                 {
-                    b.HasOne("Bumble_bee_API_2.DAL.tbl_Product", null)
-                        .WithMany()
-                        .HasForeignKey("PRODUCTPR_ID")
+                    b.HasOne("Bumble_bee_API_2.DAL.tbl_Product", "tbl_Product")
+                        .WithMany("tbl_UserProducts")
+                        .HasForeignKey("PRODUCT_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bumble_bee_API_2.DAL.tbl_User", null)
-                        .WithMany()
-                        .HasForeignKey("USERSUSR_ID")
+                    b.HasOne("Bumble_bee_API_2.DAL.tbl_User", "tbl_User")
+                        .WithMany("tbl_UserProducts")
+                        .HasForeignKey("USER_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("tbl_Product");
+
+                    b.Navigation("tbl_User");
                 });
 
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_City", b =>
@@ -246,9 +243,16 @@ namespace Bumble_bee_API_2.Migrations
                     b.Navigation("CITY");
                 });
 
+            modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_Product", b =>
+                {
+                    b.Navigation("tbl_UserProducts");
+                });
+
             modelBuilder.Entity("Bumble_bee_API_2.DAL.tbl_User", b =>
                 {
                     b.Navigation("ADDRESS");
+
+                    b.Navigation("tbl_UserProducts");
                 });
 #pragma warning restore 612, 618
         }
