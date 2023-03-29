@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bumble_bee_API_2.DAL
+namespace Bumble_bee_API_2.Database
 {
     public class tbl_User
     {
@@ -27,7 +27,7 @@ namespace Bumble_bee_API_2.DAL
         [Required]
         public byte[]? USR_PWD { get; set; }
         [Required]
-        public bool CUS_STATUS { get; set; }
+        public bool USR_STATUS { get; set; }
         public ICollection<tbl_Address>? ADDRESS { get; set; }
         public ICollection<tbl_UserProduct>? tbl_UserProducts { get; set; }
     }

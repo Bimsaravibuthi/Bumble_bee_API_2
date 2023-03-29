@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bumble_bee_API_2.DAL
+namespace Bumble_bee_API_2.Database
 {
     public class tbl_Address
     {

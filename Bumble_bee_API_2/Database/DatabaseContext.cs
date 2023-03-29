@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Bumble_bee_API_2.DAL
+namespace Bumble_bee_API_2.Database
 {
     public class DatabaseContext : DbContext
     {
@@ -14,11 +14,14 @@ namespace Bumble_bee_API_2.DAL
         public DbSet<tbl_City>? tbl_Cities { get; set; }
         public DbSet<tbl_District>? tbl_Districts { get; set; }
         public DbSet<tbl_Brand>? tbl_Brands { get; set; }
+        public DbSet<tbl_Category>? tbl_Categories { get; set; }
+        public DbSet<tbl_Product>? tbl_Products { get; set; }
+        public DbSet<tbl_UserProduct>? tbl_UserProducts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Ignore<>();
             modelBuilder.Entity<tbl_UserProduct>()
-            .HasKey(ba => new { ba.USER_ID, ba.PRODUCT_ID });
+            .HasKey(ba => new { ba.UPDATE_USER, ba.PRODUCT_ID });
 
             modelBuilder.Entity<tbl_UserProduct>()
                 .HasOne(ba => ba.tbl_Product)
@@ -28,7 +31,7 @@ namespace Bumble_bee_API_2.DAL
             modelBuilder.Entity<tbl_UserProduct>()
                 .HasOne(ba => ba.tbl_User)
                 .WithMany(a => a.tbl_UserProducts)
-                .HasForeignKey(ba => ba.USER_ID);
+                .HasForeignKey(ba => ba.UPDATE_USER);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Bumble_bee_API_2.DAL
+namespace Bumble_bee_API_2.Database
 {
     public class tbl_Product
     {
@@ -20,6 +20,12 @@ namespace Bumble_bee_API_2.DAL
         [Required]
         public string? PR_COST { get; set; }
         public int PR_QTY { get; set; }
+        [Required]
+        public int PR_ADDED_USER { get; set; }
+        [Required]
+        public DateTime PR_ADDED_DATE { get; set; }
+        [Column(TypeName ="varbinary(MAX)")]
+        public Byte[]? PR_IMAGE { get; set; }
         public ICollection<tbl_UserProduct>? tbl_UserProducts { get; set; }
         public tbl_Brand? BRAND { get; set; }
         public tbl_Category? CATEGORY { get; set; }
