@@ -38,16 +38,16 @@ namespace Bumble_bee_API_2.DAL
             }
             return new List<tbl_User>();
         }
-        public int AddUser(tbl_User us)
+        public object AddUser(tbl_User us)
         {
             int OPState = 0;
             try
             {
-                if (1==1)
+                if (us.USR_TYPE != null && us.USR_NIC != null && us.USR_FNAME != null && us.USR_LNAME != null
+                    && us.USR_EMAIL != null && us.USR_PWD != null)
                 {
-                    OPState = _connection.Database.ExecuteSqlRaw("AddUser {0},{1},{2},{3},{4},{5},{6},{7},{8},{9}",
-                    pr.PR_NAME, pr.PR_DESCRIPTION, pr.PR_PRICE, pr.BRAND.BR_ID, pr.CATEGORY.CAT_ID, pr.PR_COST, pr.PR_QTY, pr.PR_ADDED_DATE,
-                    pr.PR_ADDED_USER, pr.PR_IMAGE);
+                    OPState = _connection.Database.ExecuteSqlRaw("AddUser {0},{1},{2},{3},{4},{5},{6}",
+                    us.USR_TYPE,us.USR_NIC,us.USR_FNAME,us.USR_LNAME,us.USR_EMAIL,us.USR_PWD,us.USR_STATUS);
                 }
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using Bumble_bee_API_2.BLL;
+using Bumble_bee_API_2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,15 @@ namespace Bumble_bee_API_2.Controllers
             }
             return NoContent();
         }
-
+        [HttpPost("AddUser")]
+        public IActionResult AddUser([FromBody] User user)
+        {
+            var OPState = _bL_User.AddUser(user);
+            if(Convert.ToInt32(OPState) > 0)
+            {
+                return Ok("User inserted successfully.");
+            }
+            return Problem("User insertion un-successful.");
+        }
     }
 }
