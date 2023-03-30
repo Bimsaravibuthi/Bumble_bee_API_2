@@ -12,13 +12,13 @@ namespace Bumble_bee_API_2.Migrations
                         @pr_id int
                         as
                         if @pr_id is null
-	                        begin
-		                        select * from tbl_Product;
-	                        end
+                        begin
+	                        select * from tbl_Products;
+                        end
                         else
-	                        begin
-		                        select * from tbl_Product where PR_ID = @pr_id;
-	                        end";
+                        begin
+	                        select * from tbl_Products where PR_ID = @pr_id;
+                        end";
             migrationBuilder.Sql(sql);
         }
 
