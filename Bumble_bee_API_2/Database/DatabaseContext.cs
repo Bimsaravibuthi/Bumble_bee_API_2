@@ -6,7 +6,7 @@ namespace Bumble_bee_API_2.Database
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "Data Source=DESKTOP-PSJ54CF\\SQLEXPRESS;Initial Catalog=Bumble_bee_3;Integrated Security=True";
+            var connectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Bumble_bee_3;Integrated Security=True";
             optionsBuilder.UseSqlServer(connectionString);
         }
         public DbSet<tbl_User>? tbl_Users { get; set; }
@@ -17,6 +17,13 @@ namespace Bumble_bee_API_2.Database
         public DbSet<tbl_Category>? tbl_Categories { get; set; }
         public DbSet<tbl_Product>? tbl_Products { get; set; }
         public DbSet<tbl_UserProduct>? tbl_UserProducts { get; set; }
+
+        [Keyless]
+        public class StatusCode
+        {
+            public string? STATUS_CODE { get; set; }
+        }
+        public DbSet<StatusCode>? statusCodes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Ignore<>();

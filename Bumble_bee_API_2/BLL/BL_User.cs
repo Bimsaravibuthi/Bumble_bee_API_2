@@ -1,6 +1,8 @@
 ﻿using Bumble_bee_API_2.DAL;
 using Bumble_bee_API_2.Database;
 using Bumble_bee_API_2.Models;
+using Microsoft.AspNetCore.JsonPatch;
+
 namespace Bumble_bee_API_2.BLL
 {
     public class BL_User
@@ -38,6 +40,27 @@ namespace Bumble_bee_API_2.BLL
                 USR_TYPE = user.USR_TYPE
             };
             var OPState = _dA_User.AddUser(tbl_User);
+            return OPState;
+        }
+        public object PatchUser(int userId, JsonPatchDocument tbl_User)
+        {
+            var OPState = _dA_User.PatchUser(userId, tbl_User);
+            return OPState;
+        }
+        public object UpdateUser(User user) 
+        {
+            tbl_User tbl_User = new()
+            {
+                USR_PWD = user.USR_PWD,
+                USR_LNAME = user.USR_LNAME,
+                USR_FNAME = user.USR_FNAME,
+                USR_STATUS = user.USR_STATUS,
+                USR_NIC = user.USR_NIC,
+                USR_EMAIL = user.USR_EMAIL,
+                USR_TYPE = user.USR_TYPE,
+                USR_ID= user.USR_ID
+            };
+            var OPState = _dA_User.UpdateUser(tbl_User);
             return OPState;
         }
     }
