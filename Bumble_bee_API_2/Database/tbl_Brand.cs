@@ -10,6 +10,6 @@ namespace Bumble_bee_API_2.Database
         [Column(TypeName ="nvarchar(20)")]
         [Required]
         public string? BR_NAME { get; set; }
-        public ICollection<tbl_Product>? PRODUCT { get; set; }
+        public ICollection<tbl_Product>? Tbl_Products { get; set; }
     }
 }

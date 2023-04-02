@@ -26,8 +26,12 @@ namespace Bumble_bee_API_2.Database
         public DateTime PR_ADDED_DATE { get; set; }
         [Column(TypeName ="varbinary(MAX)")]
         public Byte[]? PR_IMAGE { get; set; }
-        public ICollection<tbl_UserProduct>? tbl_UserProducts { get; set; }
-        public tbl_Brand? BRAND { get; set; }
-        public tbl_Category? CATEGORY { get; set; }
+        public ICollection<tbl_UpdateProduct>? Tbl_UpdateProducts { get; set; }
+        [ForeignKey("Tbl_Brand")]
+        public int BR_ID { get; set; }
+        public tbl_Brand? Tbl_Brand { get; set; }
+        [ForeignKey("Tbl_Category")]
+        public int CAT_ID { get; set; }
+        public tbl_Category? Tbl_Category { get; set; }
     }
 }

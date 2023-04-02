@@ -39,15 +39,13 @@ namespace Bumble_bee_API_2.BLL
                 USR_EMAIL = user.USR_EMAIL,
                 USR_TYPE = user.USR_TYPE
             };
-            var OPState = _dA_User.AddUser(tbl_User);
-            return OPState;
+            return _dA_User.AddUser(tbl_User);
         }
         public object PatchUser(int userId, JsonPatchDocument tbl_User)
         {
-            var OPState = _dA_User.PatchUser(userId, tbl_User);
-            return OPState;
+            return _dA_User.PatchUser(userId, tbl_User);
         }
-        public object UpdateUser(User user) 
+        public object UpdateUser(User user)
         {
             tbl_User tbl_User = new()
             {
@@ -58,10 +56,9 @@ namespace Bumble_bee_API_2.BLL
                 USR_NIC = user.USR_NIC,
                 USR_EMAIL = user.USR_EMAIL,
                 USR_TYPE = user.USR_TYPE,
-                USR_ID= user.USR_ID
+                USR_ID = user.USR_ID
             };
-            var OPState = _dA_User.UpdateUser(tbl_User);
-            return OPState;
+            return _dA_User.UpdateUser(tbl_User);
         }
     }
 }

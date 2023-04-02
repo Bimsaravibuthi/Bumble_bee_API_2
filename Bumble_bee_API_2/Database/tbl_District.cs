@@ -11,6 +11,6 @@ namespace Bumble_bee_API_2.Database
         [Column(TypeName = "nvarchar(15)")]
         [Required]
         public string? DT_NAME { get; set; }
-        public List<tbl_City>? CITY { get; set; }
+        public ICollection<tbl_City>? CITIES { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Bumble_bee_API_2.Database
         public byte[]? USR_PWD { get; set; }
         [Required]
         public bool USR_STATUS { get; set; }
-        public ICollection<tbl_Address>? ADDRESS { get; set; }
-        public ICollection<tbl_UserProduct>? tbl_UserProducts { get; set; }
+        public ICollection<tbl_Address>? ADDRESSES { get; set; }
+        public ICollection<tbl_UpdateProduct>? Tbl_UpdateProducts { get; set; }
     }
 }

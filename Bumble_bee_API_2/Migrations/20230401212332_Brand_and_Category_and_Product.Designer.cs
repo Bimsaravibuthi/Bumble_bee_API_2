@@ -4,6 +4,7 @@ using Bumble_bee_API_2.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bumble_bee_API_2.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230401212332_Brand_and_Category_and_Product")]
+    partial class Brand_and_Category_and_Product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,43 +186,13 @@ namespace Bumble_bee_API_2.Migrations
                     b.ToTable("Tbl_Products");
                 });
 
-            modelBuilder.Entity("Bumble_bee_API_2.Database.tbl_UpdateProduct", b =>
-                {
-                    b.Property<int>("UPDATE_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UPDATE_ID"), 1L, 1);
-
-                    b.Property<int>("PR_ID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UPDATE_DATE")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UPDATE_DESC")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("USR_ID")
-                        .HasColumnType("int");
-
-                    b.HasKey("UPDATE_ID");
-
-                    b.HasIndex("PR_ID");
-
-                    b.HasIndex("USR_ID");
-
-                    b.ToTable("Tbl_UpdateProducts");
-                });
-
             modelBuilder.Entity("Bumble_bee_API_2.Database.tbl_User", b =>
                 {
-                    b.Property<int>("USR_ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("USR_ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("USR_EMAIL")
                         .IsRequired()
@@ -249,7 +221,7 @@ namespace Bumble_bee_API_2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(2)");
 
-                    b.HasKey("USR_ID");
+                    b.HasKey("ID");
 
                     b.ToTable("Tbl_Users");
                 });
@@ -303,25 +275,6 @@ namespace Bumble_bee_API_2.Migrations
                     b.Navigation("Tbl_Category");
                 });
 
-            modelBuilder.Entity("Bumble_bee_API_2.Database.tbl_UpdateProduct", b =>
-                {
-                    b.HasOne("Bumble_bee_API_2.Database.tbl_Product", "Tbl_Product")
-                        .WithMany("Tbl_UpdateProducts")
-                        .HasForeignKey("PR_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bumble_bee_API_2.Database.tbl_User", "Tbl_User")
-                        .WithMany("Tbl_UpdateProducts")
-                        .HasForeignKey("USR_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tbl_Product");
-
-                    b.Navigation("Tbl_User");
-                });
-
             modelBuilder.Entity("Bumble_bee_API_2.Database.tbl_Brand", b =>
                 {
                     b.Navigation("Tbl_Products");
@@ -342,16 +295,9 @@ namespace Bumble_bee_API_2.Migrations
                     b.Navigation("CITIES");
                 });
 
-            modelBuilder.Entity("Bumble_bee_API_2.Database.tbl_Product", b =>
-                {
-                    b.Navigation("Tbl_UpdateProducts");
-                });
-
             modelBuilder.Entity("Bumble_bee_API_2.Database.tbl_User", b =>
                 {
                     b.Navigation("ADDRESSES");
-
-                    b.Navigation("Tbl_UpdateProducts");
                 });
 #pragma warning restore 612, 618
         }

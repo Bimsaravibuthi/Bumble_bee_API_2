@@ -8,44 +8,44 @@ namespace Bumble_bee_API_2.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class AddressController : ControllerBase
     {
-        BL_User _bL_User = new();
+        BL_Address _bL_Address = new();
 
-        [HttpGet("GetUser(s)")]
-        public IActionResult GetUser(int? userId)
+        [HttpGet("GetAddress(s)")]
+        public IActionResult GetAddress(int? userId, int? addressId)
         {
-            var result = _bL_User.GetUser(userId);
+            var result = _bL_Address.GetAddress(userId, addressId);
             if (result != null)
             {
                 return Ok(result);
             }
             return NoContent();
         }
-        [HttpPost("AddUser")]
-        public IActionResult AddUser([FromBody] User user)
+        [HttpPost("AddAddress")]
+        public IActionResult AddAddress([FromBody] Address address)
         {
-            var OPState = _bL_User.AddUser(user);
+            var OPState = _bL_Address.AddAddress(address);
             if (OPState != null)
             {
                 return Ok(OPState);
             }
             return NoContent();
         }
-        [HttpPatch("PatchUser")]
-        public IActionResult PatchUser(int userId, [FromBody] JsonPatchDocument tbl_User)
+        [HttpPatch("PatchAddress")]
+        public IActionResult PatchAddress(int addressId, [FromBody] JsonPatchDocument tbl_Address)
         {
-            var OPState = _bL_User.PatchUser(userId, tbl_User);
+            var OPState = _bL_Address.PatchAddress(addressId, tbl_Address);
             if (OPState != null)
             {
                 return Ok(OPState);
             }
             return NoContent();
         }
-        [HttpPut("UpdateUser")]
-        public IActionResult UpdateUser([FromBody] User user)
+        [HttpPut("UpdateAddress")]
+        public IActionResult UpdateAddress([FromBody] Address address)
         {
-            var OPState = _bL_User.UpdateUser(user);
+            var OPState = _bL_Address.UpdateAddress(address);
             if (OPState != null)
             {
                 return Ok(OPState);

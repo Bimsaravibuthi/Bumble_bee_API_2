@@ -2,19 +2,21 @@
 using Bumble_bee_API_2.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
+using static Bumble_bee_API_2.Database.DatabaseContext;
 
 namespace Bumble_bee_API_2.DAL
 {
     public class DA_User
     {
         DatabaseContext _connection = new();
+        StatusCode statusCodes = new();
         public List<tbl_User> GetUser(int? userId)
         {
             List<tbl_User> Users = new();
 
             try
             {
-                var result = _connection.tbl_Users?.FromSqlRaw("GetUser {0}", userId).ToList();
+                var result = _connection.Tbl_Users?.FromSqlRaw("GetUser {0}", userId).ToList();
                 if (result != null)
                 {
                     foreach (var item in result)
@@ -39,47 +41,82 @@ namespace Bumble_bee_API_2.DAL
             }
             return new List<tbl_User>();
         }
-        public object AddUser(tbl_User us)
+        public StatusCode AddUser(tbl_User us)
         {
-            int OPState = 0;
             try
             {
                 if (us.USR_TYPE != null && us.USR_NIC != null && us.USR_FNAME != null && us.USR_LNAME != null
                     && us.USR_EMAIL != null && us.USR_PWD != null)
                 {
-                    var ssd = _connection.statusCodes?.FromSqlRaw("AddUser {0},{1},{2},{3},{4},{5},{6}",
+                    var result = _connection.statusCodes?.FromSqlRaw("AddUser {0},{1},{2},{3},{4},{5},{6}",
                     us.USR_TYPE, us.USR_NIC, us.USR_FNAME, us.USR_LNAME, us.USR_EMAIL, us.USR_PWD, us.USR_STATUS);
+                    if (result != null)
+                    {
+                        foreach (var item in result)
+                        {
+                            statusCodes = item;
+                        }
+                        return statusCodes;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An exception occurred: " + ex.Message);
             }
-            return OPState;
+            return new StatusCode();
         }
-        public object PatchUser(int userId, JsonPatchDocument tbl_User)
+        public StatusCode PatchUser(int userId, JsonPatchDocument tbl_User)
         {
-            int OPState = 0;
-            var user = _connection.tbl_Users?.Find(userId);
-
-            if(user != null)
+            try
             {
-                tbl_User.ApplyTo(user);
-                OPState = _connection.SaveChanges();
-            }
-            return OPState;
-        }          
-        public object UpdateUser(tbl_User us)
-        {
-            int OPState = 0;
+                var user = _connection.Tbl_Users?.Find(userId);
 
-            if (us.USR_TYPE != null && us.USR_NIC != null && us.USR_FNAME != null && us.USR_LNAME != null 
+                if (user != null)
+                {
+                    tbl_User.ApplyTo(user);
+                    int result = _connection.SaveChanges();
+                    if (result > 0)
+                    {
+                        statusCodes.STATUS_MSG = "PATCHED SUCCESSFULLY";
+                    }
+                    else
+                    {
+                        statusCodes.STATUS_MSG = "PATCHING UN-SUCCESSFUL";
+                    }
+                }
+                return statusCodes;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An exception occurred: " + ex.Message);
+            }
+            return new StatusCode();
+        }
+        public StatusCode UpdateUser(tbl_User us)
+        {
+            try
+            {
+                if (us.USR_TYPE != null && us.USR_NIC != null && us.USR_FNAME != null && us.USR_LNAME != null
                 && us.USR_EMAIL != null && us.USR_PWD != null)
-            {
-                OPState = _connection.Database.ExecuteSqlRaw("UpdateUser {0},{1},{2},{3},{4},{5},{6},{7}",
-                us.USR_TYPE,us.USR_NIC,us.USR_FNAME,us.USR_LNAME,us.USR_EMAIL,us.USR_PWD,us.USR_STATUS,us.USR_ID);
+                {
+                    var result = _connection.statusCodes?.FromSqlRaw("UpdateUser {0},{1},{2},{3},{4},{5},{6},{7}",
+                    us.USR_TYPE, us.USR_NIC, us.USR_FNAME, us.USR_LNAME, us.USR_EMAIL, us.USR_PWD, us.USR_STATUS, us.USR_ID);
+                    if (result != null)
+                    {
+                        foreach (var item in result)
+                        {
+                            statusCodes = item;
+                        }
+                        return statusCodes;
+                    }
+                }
             }
-            return OPState;
+            catch (Exception ex)
+            {
+                Console.WriteLine("An exception occurred: " + ex.Message);
+            }
+            return new StatusCode();
         }
     }
 }

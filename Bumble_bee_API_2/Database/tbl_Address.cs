@@ -8,8 +8,9 @@ namespace Bumble_bee_API_2.Database
     {
         [Key]
         public int ADD_ID { get; set; }
+        [Column(TypeName ="nvarchar(10)")]
         [Required]
-        public int ADD_MOBILE { get; set; }
+        public string? ADD_MOBILE { get; set; }
         [Column(TypeName = "nvarchar(20)")]
         [Required]
         public string? ADD_NAME { get; set; }
@@ -18,9 +19,11 @@ namespace Bumble_bee_API_2.Database
         public string? ADD_LINE1 { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         public string? ADD_LINE2 { get; set; }
-        [Required]
-        public tbl_City? CITY { get; set; }
-        [Required]
-        public tbl_User? USER { get; set; }
+        [ForeignKey("Tbl_City")]
+        public int CT_ID { get; set; }
+        public tbl_City? Tbl_City { get; set; }
+        [ForeignKey("Tbl_User")]
+        public int USR_ID { get; set; }
+        public tbl_User? Tbl_User { get; set; }
     }
 }
