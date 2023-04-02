@@ -23,10 +23,21 @@ namespace Bumble_bee_API_2.Database
         {
             public string? STATUS_MSG { get; set; }
         }
+        [Keyless]
+        public class Login
+        {
+            public int USR_ID { get; set; }
+            public string? USR_EMAIL { get; set; }
+            public byte[]? USR_PWD { get; set; }
+            public string? USR_FNAME { get; set; }
+            public string? USR_LNAME { get; set; }
+        }
         public DbSet<StatusCode>? statusCodes { get; set; }
+        public DbSet<Login>? Logins { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Ignore<StatusCode>();
+            //modelBuilder.Ignore<Login>();
         }
     }
 }

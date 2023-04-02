@@ -21,15 +21,17 @@ namespace Bumble_bee_API_2.DAL
                 {
                     foreach (var item in result)
                     {
-                        tbl_User tbl_User = new();
-                        tbl_User.USR_ID = item.USR_ID;
-                        tbl_User.USR_FNAME = item.USR_FNAME;
-                        tbl_User.USR_LNAME = item.USR_LNAME;
-                        tbl_User.USR_EMAIL = item.USR_EMAIL;
-                        tbl_User.USR_STATUS = item.USR_STATUS;
-                        tbl_User.USR_PWD = item.USR_PWD;
-                        tbl_User.USR_NIC = item.USR_NIC;
-                        tbl_User.USR_TYPE = item.USR_TYPE;
+                        tbl_User tbl_User = new()
+                        {
+                            USR_ID = item.USR_ID,
+                            USR_FNAME = item.USR_FNAME,
+                            USR_LNAME = item.USR_LNAME,
+                            USR_EMAIL = item.USR_EMAIL,
+                            USR_STATUS = item.USR_STATUS,
+                            USR_PWD = item.USR_PWD,
+                            USR_NIC = item.USR_NIC,
+                            USR_TYPE = item.USR_TYPE
+                        };
                         Users.Add(tbl_User);
                     }
                     return Users;
