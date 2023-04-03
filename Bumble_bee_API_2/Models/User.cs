@@ -18,7 +18,7 @@ namespace Bumble_bee_API_2.Models
         [Required]
         public string? USR_EMAIL { get; set; }  
         [Required]
-        public byte[]? USR_PWD { get; set; }
+        public string? USR_PWD { get; set; }
         [Required]
         public bool USR_STATUS { get; set; }
     }

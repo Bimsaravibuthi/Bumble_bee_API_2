@@ -1,4 +1,5 @@
 ﻿using Bumble_bee_API_2.BLL;
+using Bumble_bee_API_2.Encryption;
 using Bumble_bee_API_2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -25,6 +26,8 @@ namespace Bumble_bee_API_2.Controllers
         [HttpPost("AddUser")]
         public IActionResult AddUser([FromBody] User user)
         {
+            user.USR_PWD = MD5_Encryiption.Encrypt(user.USR_PWD);
+
             var OPState = _bL_User.AddUser(user);
             if (OPState != null)
             {

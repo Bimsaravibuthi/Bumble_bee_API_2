@@ -23,9 +23,9 @@ namespace Bumble_bee_API_2.Database
         [Column(TypeName = "nvarchar(25)")]
         [Required]
         public string? USR_EMAIL { get; set; }
-        [Column(TypeName = "varbinary(MAX)")]
+        [Column(TypeName = "varchar(MAX)")]
         [Required]
-        public byte[]? USR_PWD { get; set; }
+        public string? USR_PWD { get; set; }
         [Required]
         public bool USR_STATUS { get; set; }
         public ICollection<tbl_Address>? ADDRESSES { get; set; }

@@ -21,7 +21,10 @@ namespace Bumble_bee_API_2.BLL
             Login login = _dA_Login.Login(lcs[0].Trim());
             if(login != null)
             {
-                if (1 == 1)
+                string asd = login.USR_PWD;
+                string asf = MD5_Encryiption.Encrypt(lcs[1]);
+
+                if (login.USR_PWD == MD5_Encryiption.Encrypt(lcs[1]))
                 {
                     var claims = new[]
                     {

@@ -14,7 +14,7 @@ namespace Bumble_bee_API_2.Migrations
 						@usr_fname nvarchar(20),
 						@usr_lname nvarchar(20),
 						@usr_email nvarchar(25),
-						@usr_pwd varbinary(MAX),
+						@usr_pwd varchar(MAX),
 						@usr_status bit
 						as
 						declare @loc_email nvarchar(25)

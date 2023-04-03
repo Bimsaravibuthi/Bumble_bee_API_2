@@ -6,7 +6,7 @@ namespace Bumble_bee_API_2.Database
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "Data Source=DESKTOP-PSJ54CF\\SQLEXPRESS;Initial Catalog=Bumble_bee;Integrated Security=True";
+            var connectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Bumble_bee;Integrated Security=True";
             optionsBuilder.UseSqlServer(connectionString);
         }
         public DbSet<tbl_User>? Tbl_Users { get; set; }
@@ -28,7 +28,7 @@ namespace Bumble_bee_API_2.Database
         {
             public int USR_ID { get; set; }
             public string? USR_EMAIL { get; set; }
-            public byte[]? USR_PWD { get; set; }
+            public string? USR_PWD { get; set; }
             public string? USR_FNAME { get; set; }
             public string? USR_LNAME { get; set; }
         }
