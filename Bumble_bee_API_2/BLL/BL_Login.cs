@@ -13,17 +13,25 @@ namespace Bumble_bee_API_2.BLL
     public class BL_Login
     {
         DA_Login _dA_Login = new();
+
+        public class Token
+        {
+            public bool status { get; set; }
+            public string? errorMessage { get; set; }
+            public string? accessToken { get; set; }
+        }
+
         public object Login(string loginCredential)
         {
+            Token token1= new();
+            string accTok = null;
+
             //loginCredential = EncryptAndDecrypt.DecryptString(loginCredential);
             string[] lcs = loginCredential.Split(new string[] { "<|SP|>" }, StringSplitOptions.None);
 
             Login login = _dA_Login.Login(lcs[0].Trim());
             if(login != null)
             {
-                string asd = login.USR_PWD;
-                string asf = MD5_Encryiption.Encrypt(lcs[1]);
-
                 if (login.USR_PWD == MD5_Encryiption.Encrypt(lcs[1]))
                 {
                     var claims = new[]
@@ -46,12 +54,20 @@ namespace Bumble_bee_API_2.BLL
                         expires: DateTime.Now.AddHours(1),
                         SigninCridentials);
 
-                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-                    return new { accessToken = tokenString };
+                    accTok = new JwtSecurityTokenHandler().WriteToken(token);                  
+                }
+                if (accTok != null)
+                {
+                    token1.status = true;
+                    token1.accessToken = accTok;
+                }
+                else
+                {
+                    token1.status = false;
+                    token1.errorMessage = "EMAIL_OR_PASSWORD_INCORRECT";
                 }
             }
-            return new { status_Msg = "EMAIL_OR_PASSWORD_INCORRECT"};
+            return token1;
         }
     }
 }

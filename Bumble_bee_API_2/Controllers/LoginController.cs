@@ -11,7 +11,7 @@ namespace Bumble_bee_API_2.Controllers
     {
         BL_Login _bL_Login = new();
 
-        [HttpGet("Login")]
+        [HttpGet("Login/{loginCredential}")]
         public IActionResult Login(string loginCredential)
         {    
             var result = _bL_Login.Login(loginCredential);
