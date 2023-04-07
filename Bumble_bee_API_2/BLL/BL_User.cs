@@ -27,7 +27,7 @@ namespace Bumble_bee_API_2.BLL
             }
             return users;
         }
-        public object AddUser(User user)
+        public Status AddUser(User user)
         {
             tbl_User tbl_User = new()
             {
@@ -39,7 +39,16 @@ namespace Bumble_bee_API_2.BLL
                 USR_EMAIL = user.USR_EMAIL,
                 USR_TYPE = user.USR_TYPE
             };
-            return _dA_User.AddUser(tbl_User);
+
+            var result = _dA_User.AddUser(tbl_User);
+            
+            Status status = new()
+            {
+                STATUS_CODE= result.STATUS_CODE,
+                STATUS_MSG= result.STATUS_MSG
+            };
+
+            return status;
         }
         public object PatchUser(int userId, JsonPatchDocument tbl_User)
         {

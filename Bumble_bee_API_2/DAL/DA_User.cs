@@ -47,26 +47,21 @@ namespace Bumble_bee_API_2.DAL
         {
             try
             {
-                if (us.USR_TYPE != null && us.USR_NIC != null && us.USR_FNAME != null && us.USR_LNAME != null
-                    && us.USR_EMAIL != null && us.USR_PWD != null)
+                var result = _connection.statusCodes?.FromSqlRaw("AddUser {0},{1},{2},{3},{4},{5},{6}",
+                us.USR_TYPE, us.USR_NIC, us.USR_FNAME, us.USR_LNAME, us.USR_EMAIL, us.USR_PWD, us.USR_STATUS);
+                if (result != null)
                 {
-                    var result = _connection.statusCodes?.FromSqlRaw("AddUser {0},{1},{2},{3},{4},{5},{6}",
-                    us.USR_TYPE, us.USR_NIC, us.USR_FNAME, us.USR_LNAME, us.USR_EMAIL, us.USR_PWD, us.USR_STATUS);
-                    if (result != null)
+                    foreach (var item in result)
                     {
-                        foreach (var item in result)
-                        {
-                            statusCodes = item;
-                        }
-                        return statusCodes;
-                    }
+                        statusCodes = item;
+                    }                   
                 }
+                return statusCodes;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An exception occurred: " + ex.Message);
+                return new StatusCode() {STATUS_CODE = 500, STATUS_MSG = ex.Message};
             }
-            return new StatusCode();
         }
         public StatusCode PatchUser(int userId, JsonPatchDocument tbl_User)
         {

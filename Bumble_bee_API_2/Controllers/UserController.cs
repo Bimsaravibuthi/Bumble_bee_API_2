@@ -26,12 +26,12 @@ namespace Bumble_bee_API_2.Controllers
         [HttpPost("AddUser")]
         public IActionResult AddUser([FromBody] User user)
         {
-            user.USR_PWD = MD5_Encryiption.Encrypt(user.USR_PWD);
+            //user.USR_PWD = MD5_Encryiption.Encrypt(user.USR_PWD);
 
             var OPState = _bL_User.AddUser(user);
             if (OPState != null)
             {
-                return Ok(OPState);
+                return StatusCode(OPState.STATUS_CODE,OPState);
             }
             return NoContent();
         }

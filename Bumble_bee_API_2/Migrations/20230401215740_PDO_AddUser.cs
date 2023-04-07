@@ -13,11 +13,11 @@ namespace Bumble_bee_API_2.Migrations
 						@usr_nic nvarchar(12),
 						@usr_fname nvarchar(20),
 						@usr_lname nvarchar(20),
-						@usr_email nvarchar(25),
+						@usr_email nvarchar(40),
 						@usr_pwd varchar(MAX),
 						@usr_status bit
 						as
-						declare @loc_email nvarchar(25)
+						declare @loc_email nvarchar(40)
 						declare @loc_status nvarchar(25)
 
 						begin try

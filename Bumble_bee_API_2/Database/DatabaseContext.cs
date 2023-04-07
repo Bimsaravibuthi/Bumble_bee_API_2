@@ -21,6 +21,7 @@ namespace Bumble_bee_API_2.Database
         [Keyless]
         public class StatusCode
         {
+            public int STATUS_CODE { get; set; }
             public string? STATUS_MSG { get; set; }
         }
         [Keyless]

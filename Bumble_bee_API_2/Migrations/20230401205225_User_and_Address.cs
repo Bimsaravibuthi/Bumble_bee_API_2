@@ -20,7 +20,7 @@ namespace Bumble_bee_API_2.Migrations
                     USR_FNAME = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     USR_LNAME = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     USR_EMAIL = table.Column<string>(type: "nvarchar(25)", nullable: false),
-                    USR_PWD = table.Column<byte[]>(type: "varbinary(MAX)", nullable: false),
+                    USR_PWD = table.Column<byte[]>(type: "varchar(MAX)", nullable: false),
                     USR_STATUS = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

@@ -26,7 +26,7 @@ namespace Bumble_bee_API_2.BLL
             Token token1= new();
             string accTok = null;
 
-            //loginCredential = EncryptAndDecrypt.DecryptString(loginCredential);
+            loginCredential = EncryptAndDecrypt.DecryptString(loginCredential);
             string[] lcs = loginCredential.Split(new string[] { "<|SP|>" }, StringSplitOptions.None);
 
             Login login = _dA_Login.Login(lcs[0].Trim());
