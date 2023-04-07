@@ -18,6 +18,7 @@ namespace Bumble_bee_API_2.Migrations
 						@usr_status bit
 						as
 						declare @loc_email nvarchar(40)
+						declare @loc_statusCode int
 						declare @loc_status nvarchar(25)
 
 						begin try
@@ -27,18 +28,20 @@ namespace Bumble_bee_API_2.Migrations
 								begin
 									insert into tbl_Users(USR_TYPE,USR_NIC,USR_FNAME,USR_LNAME,USR_EMAIL,USR_PWD,USR_STATUS)
 									values(@usr_type,@usr_nic,@usr_fname,@usr_lname,@usr_email,@usr_pwd,@usr_status);
+									set @loc_statusCode = 200
 									set @loc_status = 'INSERT SUCCESSFUL'
 								end
 							else
 								begin
-									set @loc_status = 'EMAIL_EXIST'
+									set @loc_status = 'EMAIL ADDRESS IS ALREADY EXIST'
 								end
 						end try
 						begin catch
-							set @loc_status = 'DATABASE_ERROR'
+							set @loc_statusCode = 500
+							set @loc_status = 'DATABASE ERROR'
 							SELECT @loc_status AS 'STATUS_MSG';
 						end catch
-						SELECT @loc_status AS 'STATUS_MSG';";
+						SELECT @loc_statusCode AS 'STATUS_CODE', @loc_status AS 'STATUS_MSG';";
 			migrationBuilder.Sql(sql);
         }
 
